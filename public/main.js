@@ -6,7 +6,7 @@ $(document).ready(function() {
   });
   $(".add").on("click", function() {
     const html = `<div class="field">
-    <label>Poll option</label>
+    <label><h3 class="ui grey header">Poll option</h3></label>
      <input type="text" name="option[]">
    </div>`;
     $(".poll-form").append(html);
