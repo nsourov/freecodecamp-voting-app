@@ -1,0 +1,52 @@
+<%- include header %>
+  <div class="ui container">
+    <%if(warning && warning.length > 0){%>
+      <div class="ui yellow message">
+        <i class="close icon"></i>
+        <%=warning%>
+      </div>
+
+      <%}%>
+        <%if(error && error.length > 0){%>
+          <div class="ui red message">
+            <i class="close icon"></i>
+            <%=error%>
+          </div>
+
+          <%}%>
+            <%if(success && success.length > 0){%>
+              <div class="ui success message">
+                <i class="close icon"></i>
+                <%=success%>
+              </div>
+              <%}%>
+                <div class="ui four column stackable grid">
+                  <%poll.forEach(data => {%>
+                    <div class="column">
+                      <div class="">   
+                      <div class="ui cards">
+                        <div class="card ui centered">
+                          <div class="content">
+                            <div class="header">
+                              <%= data.pollname %>
+                            </div>
+                            <div class="meta">
+                              created by
+                              <%= data.author %>
+                              <br>
+                              <%=date(data.created) %>
+                            </div>
+                          </div>
+                          <div class="extra content">
+                            <div class="ui two buttons">
+                              <a href="/polls/<%= data.slugname %>" class="ui black small button">view</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                    <%})%>
+                </div>
+  </div>
+  <%- include footer %>

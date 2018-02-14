@@ -1,0 +1,22 @@
+  <%- include header %>
+  <div class="ui container">
+  <form method="POST" action="/create-poll" class="ui form">
+    <div class="poll-form">
+    <div class="field">
+      <label><h3 class="ui grey header">Poll Name</h3></label>
+      <input type="text" name="pollname">
+    </div>
+    <div class="field">
+     <label><h3 class="ui grey header">Poll option</h3></label>
+      <input type="text" name="option[]">
+    </div>
+  </div>
+  <br>
+ <button class="ui purple inverted button submit large">Create poll</button>
+ <div class="ui error message"></div>
+  </form>
+  <br>
+ <button class="ui blue inverted button add small floated">Add option</button>
+  <br>
+  </div>
+  <%- include footer %>

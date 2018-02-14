@@ -1,0 +1,48 @@
+<%- include header %>
+  <div class="ui container">
+  <div class="ui middle aligned center aligned grid">
+    <div class="column form-box">
+      <h2 class="ui black header">
+        <div class="content">
+          Create an account
+        </div>
+      </h2>
+      <form class="ui form" method="POST" action="/auth/register">
+        <div class="ui stacked segment">
+          <div class="field">
+            <div class="ui left icon input">
+              <i class="user icon"></i>
+              <input type="text" name="username" placeholder="Username">
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui left icon input">
+              <i class="lock icon"></i>
+              <input type="password" name="password" placeholder="Password">
+            </div>
+          </div>
+          <div class="ui fluid large black submit button">Sign up</div>
+        </div>
+        <div class="ui error message"></div>
+
+        <%if(warning && warning.length > 0){%>
+        <div class="ui yellow message"><i class="close icon"></i><%=warning%></div>
+          
+        <%}%>
+        <%if(error && error.length > 0){%>
+        <div class="ui negative message"><i class="close icon"></i><%=error%></div>
+          
+        <%}%>
+        <%if(success && success.length > 0){%>
+        <div class="ui success message"><i class="close icon"></i><%=success%></div>  
+        <%}%>
+      </form>
+
+      <div class="ui message">
+        Already have an acoount?
+        <a href="/login">Login</a>
+      </div>
+    </div>
+  </div>
+  </div>
+    <%- include footer %>

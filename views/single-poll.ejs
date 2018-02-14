@@ -1,0 +1,57 @@
+<%- include header %>
+  <div class="ui container">
+    <%if(warning && warning.length > 0){%>
+      <div class="ui yellow message">
+        <i class="close icon"></i>
+        <%=warning%>
+      </div>
+
+      <%}%>
+        <%if(error && error.length > 0){%>
+          <div class="ui red message">
+            <i class="close icon"></i>
+            <%=error%>
+          </div>
+
+          <%}%>
+            <%if(success && success.length > 0){%>
+              <div class="ui success message">
+                <i class="close icon"></i>
+                <%=success%>
+              </div>
+              <%}%>
+                <br>
+
+                <div class="ui grid">
+                  <div class="six wide column">
+                    <form method="POST" action="/vote/<%= poll.slugname%>" class="ui form"> 
+                      <div class="grouped fields">
+                          <label>
+                            <h2 class="ui grey header">
+                              <%= poll.pollname %>
+                            </h2>
+                          </label>
+                          <%poll.options.forEach(data => {%>
+                            <div class="field" data-id="<%=poll._id%>">
+                                <div class="ui radio checkbox">
+                                  <input type="radio" name="vote" tabindex="0" class="hidden" value="<%=data.name%>">
+                                  <label>
+                                      <h4 class="ui grey header">
+                                    <%= data.name%>
+                                      </h4>
+                                  </label>
+                                </div>
+                              </div>
+                              <%})%>
+                        </div>
+                        <button class="submit ui inverted black button">Vote!</button>
+                        <div class="ui error message"></div>
+                    </form>
+                  </div>
+                  <div class="eight wide column">
+                    <div id="chart_div"></div>
+                  </div>
+                </div>
+  </div>
+  <script src="/chart.js"></script>
+  <%- include footer %>
