@@ -22,8 +22,8 @@
               <%}%>
                 <br>
 
-                <div class="ui grid">
-                  <div class="six wide column">
+                <div class="ui six column stackable grid">
+                  <div class="column">
                     <form method="POST" action="/vote/<%= poll.slugname%>" class="ui form"> 
                       <div class="grouped fields">
                           <label>
@@ -46,10 +46,11 @@
                         </div>
                         <button class="submit ui inverted black button">Vote!</button>
                         <div class="ui error message"></div>
+                        <div class="ui active inline loader"></div>
                     </form>
                   </div>
-                  <div class="eight wide column">
-                    <div id="chart_div"></div>
+                  <div class="column">
+                    <div id="chart_div" class="chart"></div>
                   </div>
                 </div>
   </div>

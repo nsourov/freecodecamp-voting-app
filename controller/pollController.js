@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Poll = require("../models/poll");
 const slug = require("slug");
-const ip = require('ip');
 
 const date = (data) => {
   let myDate = new Date(data)
@@ -9,18 +8,36 @@ const date = (data) => {
 }
 
 const getForHome = async (req, res) => {
-  const poll = await Poll.find();
-  res.render("home", { user: req.user, title: "Voting App", poll , date: date });
+  try {
+    const poll = await Poll.find();
+    res.render("home", { user: req.user, title: "Voting App", poll , date: date });
+  } catch (error) {
+    req.flash('warning', 'Something went wrong');
+    console.log(error)
+    res.redirect('/')
+  }
 }
 
 const singlePoll = async (req, res) => {
-  const pollName = req.params.slug;
-  const poll = await Poll.findOne({ slugname: pollName });
-  res.render("single-poll", { user: req.user, title: 'Voting App | ' + poll.pollname , poll });
+  try {
+    const pollName = req.params.slug;
+    const poll = await Poll.findOne({ slugname: pollName });
+    res.render("single-poll", { user: req.user, title: 'Voting App | ' + poll.pollname , poll });
+  } catch (error) {
+    req.flash('warning', 'Something went wrong');
+    console.log(error)
+    res.redirect('/')
+  }
 }
 const myPoll = async (req, res) => {
-  const myPoll = await Poll.find({author: req.user.username});
-  res.render("my-polls", { user: req.user, title: "Voting App | My Polls", poll: myPoll });
+  try {
+    const myPoll = await Poll.find({author: req.user.username});
+    res.render("my-polls", { user: req.user, title: "Voting App | My Polls", poll: myPoll });
+  } catch (error) {
+    req.flash('warning', 'Something went wrong');
+    console.log(error)
+    res.redirect('/')
+  }
 }
 const createPoll =  (req, res) => {
   res.render("create_poll", {
@@ -29,7 +46,8 @@ const createPoll =  (req, res) => {
   });
 }
 const addPoll =  async (req, res) => {
-  let options = [];
+  try {
+    let options = [];
   for (var i = 0; i < req.body.option.length; i++) {
     let data = req.body.option[i];
     options.push({ name: data });
@@ -39,34 +57,52 @@ const addPoll =  async (req, res) => {
   const author = req.user.username;
   const newPoll = new Poll({ pollname, options, author, slugname});
   const poll = await newPoll.save();
-  res.redirect(`/polls/${slugname}`);
+  await res.redirect(`/polls/${slugname}`);
+  } catch (error) {
+    req.flash('warning', 'Something went wrong');
+    console.log(error)
+    res.redirect('/')
+  }
+ 
 }
 
 const votePoll = async (req, res) => {
-  const pollName = req.params.slugname;
-  const ipaddress = ip.address();
-  const poll = await Poll.findOne({ slugname: pollName });
-  const voteVal = poll.options.find(data => data.name === req.body.vote);
-  if(voteVal.ipaddress === ipaddress){
-    req.flash('error', 'You cannot vote a option twice!')
-    res.redirect(`/polls/${pollName}`)
-  }else{
+  try {
+    const pollName = req.params.slugname;
+    const poll = await Poll.findOne({ slugname: pollName });
+    const voteVal = poll.options.find(data => data.name === req.body.vote);
     voteVal.vote += 1;
-    voteVal.ipaddress = ipaddress;
     const newPoll = await poll.save();
-    res.redirect(`/polls/${pollName}`);
+    await res.redirect(`/polls/${pollName}`);
+  } catch (error) {
+    req.flash('warning', 'Something went wrong');
+    console.log(error)
+    res.redirect('/')
   }
+  
 }
 
 const deletePoll = async (req,res) => {
-  const pollName = req.params.slug;
-  const poll = await Poll.findOneAndRemove({ slugname: pollName });
-  res.redirect('/my-polls')
+  try {
+    const pollName = req.params.slug;
+    const poll = await Poll.findOneAndRemove({ slugname: pollName });
+    res.redirect('/my-polls')
+  } catch (error) {
+    req.flash('warning', 'Something went wrong');
+    console.log(error)
+    res.redirect('/')
+  }
 }
 
 const pollAPI = async (req,res) => {
-  const poll = await Poll.find();
-  res.json(poll)
+  try {
+    const poll = await Poll.find();
+    res.json(poll)
+  } catch (error) {
+    req.flash('warning', 'Something went wrong');
+    console.log(error)
+    res.redirect('/')
+  }
 }
 
 module.exports = {getForHome, singlePoll, myPoll, createPoll, addPoll, votePoll, deletePoll, pollAPI}

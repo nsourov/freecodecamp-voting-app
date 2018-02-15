@@ -14,9 +14,10 @@ const User = require("./models/user");
 require('dotenv').config()
 //CONNECTION DB fccvotingapp
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB).then(() => {
+mongoose.connect(process.env.MONGODB)
+.then(() => {
   console.log("DB CONNECTED");
-});
+})
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/public'));

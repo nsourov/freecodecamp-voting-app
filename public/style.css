@@ -57,13 +57,17 @@ body > div.ui.fixed.inverted.menu{
   color: #fff;
 }
 
-.active {
+a.active {
   background-color: #4CAF50;
   color: white;
 }
 
 .topnav .icon {
   display: none;
+}
+.chart {
+  width: 100%; 
+  min-height: 450px;
 }
 
 @media screen and (max-width: 600px) {

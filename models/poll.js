@@ -6,8 +6,7 @@ let PollSchema = new Schema({
   options: [
     {
       name: String,
-      vote: { type: Number, default: 1 },
-      ipaddress: { type: String, default: "Visitor ip address" }
+      vote: { type: Number, default: 1 }
     }
   ],
   author: String,
